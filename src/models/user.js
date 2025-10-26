@@ -1,22 +1,44 @@
 const mongoose = require("mongoose");
+const validator = require("validator"); // import validator
 
 const userSchema = new mongoose.Schema({
-    firstName:{
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
         type: String
     },
-    lastName:{
+    emailId: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate: {
+            validator: function(value) {
+                return validator.isEmail(value);
+            },
+            message: "Invalid email format"
+        }
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    age: {
         type: String
     },
-    emailId:{
+    gender: {
         type: String
     },
-    password:{
+    photoUrl: {
+        type: String,
+        default: "https://www.flaticon.com/free-icon/user_149071?term=profile+picture&page=1&position=5&origin=tag&related_id=149071"
+    },
+    about: {
         type: String
     },
-    age:{
-        type: String
-    }, 
-    gender:{
+    skills: {
         type: String
     }
 });
